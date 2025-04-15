@@ -20,9 +20,9 @@ CREATE TABLE permissions (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
-    created_by UUID,
-    updated_by UUID,
-    deleted_by UUID
+    created_by  UUID,
+    updated_by  UUID,
+    deleted_by  UUID
 );
 
 CREATE TABLE role_permissions (
@@ -33,9 +33,9 @@ CREATE TABLE role_permissions (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
-    created_by UUID,
-    updated_by UUID,
-    deleted_by UUID,
+    created_by  UUID,
+    updated_by  UUID,
+    deleted_by  UUID,
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
     FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
 );

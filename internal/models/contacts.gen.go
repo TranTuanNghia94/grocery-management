@@ -14,25 +14,25 @@ const TableNameContact = "contacts"
 
 // Contact mapped from table <contacts>
 type Contact struct {
-	ID          string         `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	VendorID    string         `gorm:"column:vendor_id" json:"vendor_id"`
-	Name        string         `gorm:"column:name;not null" json:"name"`
-	PhoneNumber string         `gorm:"column:phone_number" json:"phone_number"`
-	Email       string         `gorm:"column:email" json:"email"`
-	Address     string         `gorm:"column:address" json:"address"`
-	Designation string         `gorm:"column:designation" json:"designation"`
-	Department  string         `gorm:"column:department" json:"department"`
-	DateOfBirth time.Time      `gorm:"column:date_of_birth" json:"date_of_birth"`
-	FirstName   string         `gorm:"column:first_name" json:"first_name"`
-	LastName    string         `gorm:"column:last_name" json:"last_name"`
-	Position    string         `gorm:"column:position" json:"position"`
-	Status      string         `gorm:"column:status;not null;default:active" json:"status"`
-	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt   time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	CreatedBy   string         `gorm:"column:created_by" json:"created_by"`
-	UpdatedBy   string         `gorm:"column:updated_by" json:"updated_by"`
-	DeletedBy   string         `gorm:"column:deleted_by" json:"deleted_by"`
+	ID          *string        `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	VendorID    *string        `gorm:"column:vendor_id;type:uuid" json:"vendor_id"`
+	Name        string         `gorm:"column:name;type:character varying(100);not null" json:"name"`
+	PhoneNumber *string        `gorm:"column:phone_number;type:character varying(20)" json:"phone_number"`
+	Email       *string        `gorm:"column:email;type:character varying(100)" json:"email"`
+	Address     *string        `gorm:"column:address;type:text" json:"address"`
+	Designation *string        `gorm:"column:designation;type:character varying(100)" json:"designation"`
+	Department  *string        `gorm:"column:department;type:character varying(100)" json:"department"`
+	DateOfBirth *time.Time     `gorm:"column:date_of_birth;type:date" json:"date_of_birth"`
+	FirstName   *string        `gorm:"column:first_name;type:character varying(150)" json:"first_name"`
+	LastName    *string        `gorm:"column:last_name;type:character varying(150)" json:"last_name"`
+	Position    *string        `gorm:"column:position;type:character varying(100)" json:"position"`
+	Status      *string        `gorm:"column:status;type:status_enum;not null;default:active" json:"status"`
+	CreatedAt   *time.Time     `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt   *time.Time     `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at;type:timestamp without time zone" json:"deleted_at"`
+	CreatedBy   *string        `gorm:"column:created_by;type:uuid" json:"created_by"`
+	UpdatedBy   *string        `gorm:"column:updated_by;type:uuid" json:"updated_by"`
+	DeletedBy   *string        `gorm:"column:deleted_by;type:uuid" json:"deleted_by"`
 }
 
 // TableName Contact's table name

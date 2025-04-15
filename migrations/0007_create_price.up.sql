@@ -15,9 +15,9 @@ CREATE TABLE price_history (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
-    created_by UUID,
-    updated_by UUID,
-    deleted_by UUID,
+    created_by  UUID REFERENCES users(id),
+    updated_by  UUID REFERENCES users(id),
+    deleted_by  UUID REFERENCES users(id),
     FOREIGN KEY (vendor_id) REFERENCES vendors(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

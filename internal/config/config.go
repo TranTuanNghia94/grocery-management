@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 )
 
 type Config struct {
@@ -15,11 +16,14 @@ type Config struct {
 	SSLMode    string
 }
 
-func LoadConfig() (*Config, error) {
+func LoadConfig(log *zap.Logger) (*Config, error) {
 	err := godotenv.Load()
 	if err != nil {
 		return nil, err
 	}
+
+	log.Info("Loaded environment variables successfully")
+	log.Info("DB_HOST", zap.String("DB_HOST", os.Getenv("DB_HOST")))
 
 	return &Config{
 		DBHost:     os.Getenv("DB_HOST"),

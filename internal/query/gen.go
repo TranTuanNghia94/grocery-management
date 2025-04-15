@@ -22,7 +22,6 @@ var (
 	Grocery              *grocery
 	Inventory            *inventory
 	InventoryTransaction *inventoryTransaction
-	Migration            *migration
 	Permission           *permission
 	PriceHistory         *priceHistory
 	Product              *product
@@ -40,7 +39,6 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	Grocery = &Q.Grocery
 	Inventory = &Q.Inventory
 	InventoryTransaction = &Q.InventoryTransaction
-	Migration = &Q.Migration
 	Permission = &Q.Permission
 	PriceHistory = &Q.PriceHistory
 	Product = &Q.Product
@@ -59,7 +57,6 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		Grocery:              newGrocery(db, opts...),
 		Inventory:            newInventory(db, opts...),
 		InventoryTransaction: newInventoryTransaction(db, opts...),
-		Migration:            newMigration(db, opts...),
 		Permission:           newPermission(db, opts...),
 		PriceHistory:         newPriceHistory(db, opts...),
 		Product:              newProduct(db, opts...),
@@ -79,7 +76,6 @@ type Query struct {
 	Grocery              grocery
 	Inventory            inventory
 	InventoryTransaction inventoryTransaction
-	Migration            migration
 	Permission           permission
 	PriceHistory         priceHistory
 	Product              product
@@ -100,7 +96,6 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Grocery:              q.Grocery.clone(db),
 		Inventory:            q.Inventory.clone(db),
 		InventoryTransaction: q.InventoryTransaction.clone(db),
-		Migration:            q.Migration.clone(db),
 		Permission:           q.Permission.clone(db),
 		PriceHistory:         q.PriceHistory.clone(db),
 		Product:              q.Product.clone(db),
@@ -128,7 +123,6 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		Grocery:              q.Grocery.replaceDB(db),
 		Inventory:            q.Inventory.replaceDB(db),
 		InventoryTransaction: q.InventoryTransaction.replaceDB(db),
-		Migration:            q.Migration.replaceDB(db),
 		Permission:           q.Permission.replaceDB(db),
 		PriceHistory:         q.PriceHistory.replaceDB(db),
 		Product:              q.Product.replaceDB(db),
@@ -146,7 +140,6 @@ type queryCtx struct {
 	Grocery              IGroceryDo
 	Inventory            IInventoryDo
 	InventoryTransaction IInventoryTransactionDo
-	Migration            IMigrationDo
 	Permission           IPermissionDo
 	PriceHistory         IPriceHistoryDo
 	Product              IProductDo
@@ -164,7 +157,6 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Grocery:              q.Grocery.WithContext(ctx),
 		Inventory:            q.Inventory.WithContext(ctx),
 		InventoryTransaction: q.InventoryTransaction.WithContext(ctx),
-		Migration:            q.Migration.WithContext(ctx),
 		Permission:           q.Permission.WithContext(ctx),
 		PriceHistory:         q.PriceHistory.WithContext(ctx),
 		Product:              q.Product.WithContext(ctx),

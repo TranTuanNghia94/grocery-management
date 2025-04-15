@@ -34,7 +34,7 @@ func main() {
 		Port:     getEnvOrDefault("POSTGRES_PORT", "5432"),
 		User:     getEnvOrDefault("POSTGRES_USER", "postgres"),
 		Password: getEnvOrDefault("POSTGRES_PASSWORD", "postgres"),
-		DBName:   getEnvOrDefault("POSTGRES_DB", "grocery_db"),
+		DBName:   getEnvOrDefault("POSTGRES_DB", "grocery_store"),
 		SSLMode:  getEnvOrDefault("POSTGRES_SSLMODE", "disable"),
 	}
 
@@ -54,9 +54,13 @@ func main() {
 
 	// Initialize generator
 	g := gen.NewGenerator(gen.Config{
-		OutPath:      "internal/query",
-		ModelPkgPath: "models",
-		Mode:         gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface,
+		OutPath:          "internal/query",
+		ModelPkgPath:     "models",
+		FieldNullable:    true,
+		FieldCoverable:   true,
+		FieldSignable:    true,
+		FieldWithTypeTag: true,
+		Mode:             gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface,
 	})
 
 	// Use the connected db

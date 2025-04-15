@@ -19,8 +19,8 @@ CREATE TABLE inventory (
     reorder_level INTEGER DEFAULT 10,
     in_stock BOOLEAN DEFAULT TRUE,
     inventory_status inventory_status NOT NULL DEFAULT 'available',
-    created_by UUID,
-    updated_by UUID,
+    created_by  UUID REFERENCES users(id),
+    updated_by  UUID REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -45,8 +45,8 @@ CREATE TABLE inventory_transaction (
     unit_price DECIMAL(15, 0) NOT NULL,
     transaction_type inventory_transaction_type NOT NULL,
     transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    created_by UUID,
-    updated_by UUID,
+    created_by  UUID REFERENCES users(id),
+    updated_by  UUID REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -14,16 +14,16 @@ const TableNameRolePermission = "role_permissions"
 
 // RolePermission mapped from table <role_permissions>
 type RolePermission struct {
-	ID           string         `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	RoleID       string         `gorm:"column:role_id;not null" json:"role_id"`
-	PermissionID string         `gorm:"column:permission_id;not null" json:"permission_id"`
-	Status       string         `gorm:"column:status;not null;default:active" json:"status"`
-	CreatedAt    time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt    time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	CreatedBy    string         `gorm:"column:created_by" json:"created_by"`
-	UpdatedBy    string         `gorm:"column:updated_by" json:"updated_by"`
-	DeletedBy    string         `gorm:"column:deleted_by" json:"deleted_by"`
+	ID           *string        `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	RoleID       string         `gorm:"column:role_id;type:uuid;not null" json:"role_id"`
+	PermissionID string         `gorm:"column:permission_id;type:uuid;not null" json:"permission_id"`
+	Status       *string        `gorm:"column:status;type:status_enum;not null;default:active" json:"status"`
+	CreatedAt    *time.Time     `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt    *time.Time     `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at;type:timestamp without time zone" json:"deleted_at"`
+	CreatedBy    *string        `gorm:"column:created_by;type:uuid" json:"created_by"`
+	UpdatedBy    *string        `gorm:"column:updated_by;type:uuid" json:"updated_by"`
+	DeletedBy    *string        `gorm:"column:deleted_by;type:uuid" json:"deleted_by"`
 }
 
 // TableName RolePermission's table name

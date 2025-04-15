@@ -35,7 +35,8 @@ func newUser(db *gorm.DB, opts ...gen.DOOption) user {
 	_user.FirstName = field.NewString(tableName, "first_name")
 	_user.LastName = field.NewString(tableName, "last_name")
 	_user.PhoneNumber = field.NewString(tableName, "phone_number")
-	_user.Role = field.NewString(tableName, "role")
+	_user.Status = field.NewString(tableName, "status")
+	_user.RoleID = field.NewString(tableName, "role_id")
 	_user.IsActive = field.NewBool(tableName, "is_active")
 	_user.LastLogin = field.NewTime(tableName, "last_login")
 	_user.CreatedAt = field.NewTime(tableName, "created_at")
@@ -62,7 +63,8 @@ type user struct {
 	FirstName    field.String
 	LastName     field.String
 	PhoneNumber  field.String
-	Role         field.String
+	Status       field.String
+	RoleID       field.String
 	IsActive     field.Bool
 	LastLogin    field.Time
 	CreatedAt    field.Time
@@ -95,7 +97,8 @@ func (u *user) updateTableName(table string) *user {
 	u.FirstName = field.NewString(table, "first_name")
 	u.LastName = field.NewString(table, "last_name")
 	u.PhoneNumber = field.NewString(table, "phone_number")
-	u.Role = field.NewString(table, "role")
+	u.Status = field.NewString(table, "status")
+	u.RoleID = field.NewString(table, "role_id")
 	u.IsActive = field.NewBool(table, "is_active")
 	u.LastLogin = field.NewTime(table, "last_login")
 	u.CreatedAt = field.NewTime(table, "created_at")
@@ -120,7 +123,7 @@ func (u *user) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *user) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 17)
+	u.fieldMap = make(map[string]field.Expr, 18)
 	u.fieldMap["id"] = u.ID
 	u.fieldMap["grocery_id"] = u.GroceryID
 	u.fieldMap["username"] = u.Username
@@ -129,7 +132,8 @@ func (u *user) fillFieldMap() {
 	u.fieldMap["first_name"] = u.FirstName
 	u.fieldMap["last_name"] = u.LastName
 	u.fieldMap["phone_number"] = u.PhoneNumber
-	u.fieldMap["role"] = u.Role
+	u.fieldMap["status"] = u.Status
+	u.fieldMap["role_id"] = u.RoleID
 	u.fieldMap["is_active"] = u.IsActive
 	u.fieldMap["last_login"] = u.LastLogin
 	u.fieldMap["created_at"] = u.CreatedAt

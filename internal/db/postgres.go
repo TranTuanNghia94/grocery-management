@@ -5,9 +5,15 @@ import (
 	"grocery-management/internal/config"
 	"time"
 
+	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+)
+
+var (
+	// Instance is the global database instance
+	Instance *PostgresDB
 )
 
 // PostgresDB implements the Database interface with PostgreSQL
@@ -60,4 +66,14 @@ func (p *PostgresDB) Close() {
 // GetDB returns the GORM DB instance for use in database operations
 func (p *PostgresDB) GetDB() *gorm.DB {
 	return p.db
+}
+
+func Initialize(cfg config.Config, log *zap.Logger) error {
+	db, err := NewPostgresDB(cfg)
+	if err != nil {
+		return err
+	}
+	Instance = db
+	log.Info("PostgreSQL database connection established", zap.String("host", cfg.DBHost), zap.String("port", cfg.DBPort))
+	return nil
 }

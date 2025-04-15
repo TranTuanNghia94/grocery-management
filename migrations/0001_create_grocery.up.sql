@@ -21,9 +21,6 @@ CREATE TABLE grocery (
     verification_token VARCHAR(255),
     verification_token_expiry TIMESTAMP,
     status status_enum NOT NULL DEFAULT 'active',
-    created_by UUID,
-    updated_by UUID,
-    deleted_by UUID,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP

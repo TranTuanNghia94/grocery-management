@@ -14,9 +14,9 @@ CREATE TABLE vendors (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
-    created_by UUID,
-    updated_by UUID,
-    deleted_by UUID
+    created_by UUID REFERENCES users(id),
+    updated_by UUID REFERENCES users(id),
+    deleted_by UUID REFERENCES users(id)
 );
 
 -- Create indexes for the vendor table
@@ -44,9 +44,10 @@ CREATE TABLE contacts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
-    created_by UUID,
-    updated_by UUID,
-    deleted_by UUID
+    created_by  UUID REFERENCES users(id),
+    updated_by  UUID REFERENCES users(id),
+    deleted_by  UUID REFERENCES users(id),
+    FOREIGN KEY (vendor_id) REFERENCES vendors(id) ON DELETE CASCADE
 );
 
 -- Create indexes for the contact_person table

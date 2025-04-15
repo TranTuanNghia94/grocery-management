@@ -45,9 +45,6 @@ func newGrocery(db *gorm.DB, opts ...gen.DOOption) grocery {
 	_grocery.VerificationToken = field.NewString(tableName, "verification_token")
 	_grocery.VerificationTokenExpiry = field.NewTime(tableName, "verification_token_expiry")
 	_grocery.Status = field.NewString(tableName, "status")
-	_grocery.CreatedBy = field.NewString(tableName, "created_by")
-	_grocery.UpdatedBy = field.NewString(tableName, "updated_by")
-	_grocery.DeletedBy = field.NewString(tableName, "deleted_by")
 	_grocery.CreatedAt = field.NewTime(tableName, "created_at")
 	_grocery.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_grocery.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -79,9 +76,6 @@ type grocery struct {
 	VerificationToken       field.String
 	VerificationTokenExpiry field.Time
 	Status                  field.String
-	CreatedBy               field.String
-	UpdatedBy               field.String
-	DeletedBy               field.String
 	CreatedAt               field.Time
 	UpdatedAt               field.Time
 	DeletedAt               field.Field
@@ -119,9 +113,6 @@ func (g *grocery) updateTableName(table string) *grocery {
 	g.VerificationToken = field.NewString(table, "verification_token")
 	g.VerificationTokenExpiry = field.NewTime(table, "verification_token_expiry")
 	g.Status = field.NewString(table, "status")
-	g.CreatedBy = field.NewString(table, "created_by")
-	g.UpdatedBy = field.NewString(table, "updated_by")
-	g.DeletedBy = field.NewString(table, "deleted_by")
 	g.CreatedAt = field.NewTime(table, "created_at")
 	g.UpdatedAt = field.NewTime(table, "updated_at")
 	g.DeletedAt = field.NewField(table, "deleted_at")
@@ -141,7 +132,7 @@ func (g *grocery) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (g *grocery) fillFieldMap() {
-	g.fieldMap = make(map[string]field.Expr, 24)
+	g.fieldMap = make(map[string]field.Expr, 21)
 	g.fieldMap["id"] = g.ID
 	g.fieldMap["name"] = g.Name
 	g.fieldMap["description"] = g.Description
@@ -160,9 +151,6 @@ func (g *grocery) fillFieldMap() {
 	g.fieldMap["verification_token"] = g.VerificationToken
 	g.fieldMap["verification_token_expiry"] = g.VerificationTokenExpiry
 	g.fieldMap["status"] = g.Status
-	g.fieldMap["created_by"] = g.CreatedBy
-	g.fieldMap["updated_by"] = g.UpdatedBy
-	g.fieldMap["deleted_by"] = g.DeletedBy
 	g.fieldMap["created_at"] = g.CreatedAt
 	g.fieldMap["updated_at"] = g.UpdatedAt
 	g.fieldMap["deleted_at"] = g.DeletedAt

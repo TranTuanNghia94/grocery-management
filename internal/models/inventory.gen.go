@@ -12,23 +12,23 @@ const TableNameInventory = "inventory"
 
 // Inventory mapped from table <inventory>
 type Inventory struct {
-	ID              string    `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	GroceryID       string    `gorm:"column:grocery_id;not null" json:"grocery_id"`
-	ProductID       string    `gorm:"column:product_id;not null" json:"product_id"`
-	Sku             string    `gorm:"column:sku;not null" json:"sku"`
-	Barcode         string    `gorm:"column:barcode;not null" json:"barcode"`
-	CategoryID      string    `gorm:"column:category_id;not null" json:"category_id"`
-	ProductName     string    `gorm:"column:product_name;not null" json:"product_name"`
-	Quantity        int32     `gorm:"column:quantity;not null" json:"quantity"`
-	UnitPrice       float64   `gorm:"column:unit_price;not null" json:"unit_price"`
-	ExpiryDate      time.Time `gorm:"column:expiry_date" json:"expiry_date"`
-	ReorderLevel    int32     `gorm:"column:reorder_level;default:10" json:"reorder_level"`
-	InStock         bool      `gorm:"column:in_stock;default:true" json:"in_stock"`
-	InventoryStatus string    `gorm:"column:inventory_status;not null;default:available" json:"inventory_status"`
-	CreatedBy       string    `gorm:"column:created_by" json:"created_by"`
-	UpdatedBy       string    `gorm:"column:updated_by" json:"updated_by"`
-	CreatedAt       time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt       time.Time `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID              *string    `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	GroceryID       string     `gorm:"column:grocery_id;type:uuid;not null" json:"grocery_id"`
+	ProductID       string     `gorm:"column:product_id;type:uuid;not null" json:"product_id"`
+	Sku             string     `gorm:"column:sku;type:character varying(80);not null" json:"sku"`
+	Barcode         string     `gorm:"column:barcode;type:character varying(100);not null" json:"barcode"`
+	CategoryID      string     `gorm:"column:category_id;type:uuid;not null" json:"category_id"`
+	ProductName     string     `gorm:"column:product_name;type:character varying(255);not null" json:"product_name"`
+	Quantity        int32      `gorm:"column:quantity;type:integer;not null" json:"quantity"`
+	UnitPrice       float64    `gorm:"column:unit_price;type:numeric(10,2);not null" json:"unit_price"`
+	ExpiryDate      *time.Time `gorm:"column:expiry_date;type:date" json:"expiry_date"`
+	ReorderLevel    *int32     `gorm:"column:reorder_level;type:integer;default:10" json:"reorder_level"`
+	InStock         *bool      `gorm:"column:in_stock;type:boolean;default:true" json:"in_stock"`
+	InventoryStatus *string    `gorm:"column:inventory_status;type:inventory_status;not null;default:available" json:"inventory_status"`
+	CreatedBy       *string    `gorm:"column:created_by;type:uuid" json:"created_by"`
+	UpdatedBy       *string    `gorm:"column:updated_by;type:uuid" json:"updated_by"`
+	CreatedAt       *time.Time `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt       *time.Time `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 // TableName Inventory's table name

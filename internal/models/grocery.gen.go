@@ -14,30 +14,27 @@ const TableNameGrocery = "grocery"
 
 // Grocery mapped from table <grocery>
 type Grocery struct {
-	ID                      string         `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	Name                    string         `gorm:"column:name;not null" json:"name"`
-	Description             string         `gorm:"column:description" json:"description"`
-	Address                 string         `gorm:"column:address" json:"address"`
-	City                    string         `gorm:"column:city" json:"city"`
-	State                   string         `gorm:"column:state" json:"state"`
-	Country                 string         `gorm:"column:country" json:"country"`
-	PostalCode              string         `gorm:"column:postal_code" json:"postal_code"`
-	PhoneNumber             string         `gorm:"column:phone_number" json:"phone_number"`
-	Email                   string         `gorm:"column:email" json:"email"`
-	Position                string         `gorm:"column:position" json:"position"`
-	OpeningHours            string         `gorm:"column:opening_hours" json:"opening_hours"`
-	ClosingHours            string         `gorm:"column:closing_hours" json:"closing_hours"`
-	IsOpen                  bool           `gorm:"column:is_open" json:"is_open"`
-	IsVerified              bool           `gorm:"column:is_verified" json:"is_verified"`
-	VerificationToken       string         `gorm:"column:verification_token" json:"verification_token"`
-	VerificationTokenExpiry time.Time      `gorm:"column:verification_token_expiry" json:"verification_token_expiry"`
-	Status                  string         `gorm:"column:status;not null;default:active" json:"status"`
-	CreatedBy               string         `gorm:"column:created_by" json:"created_by"`
-	UpdatedBy               string         `gorm:"column:updated_by" json:"updated_by"`
-	DeletedBy               string         `gorm:"column:deleted_by" json:"deleted_by"`
-	CreatedAt               time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt               time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt               gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	ID                      *string        `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	Name                    string         `gorm:"column:name;type:character varying(100);not null" json:"name"`
+	Description             *string        `gorm:"column:description;type:text" json:"description"`
+	Address                 *string        `gorm:"column:address;type:text" json:"address"`
+	City                    *string        `gorm:"column:city;type:character varying(100)" json:"city"`
+	State                   *string        `gorm:"column:state;type:character varying(100)" json:"state"`
+	Country                 *string        `gorm:"column:country;type:character varying(100)" json:"country"`
+	PostalCode              *string        `gorm:"column:postal_code;type:character varying(20)" json:"postal_code"`
+	PhoneNumber             *string        `gorm:"column:phone_number;type:character varying(20)" json:"phone_number"`
+	Email                   *string        `gorm:"column:email;type:character varying(100)" json:"email"`
+	Position                *string        `gorm:"column:position;type:text" json:"position"`
+	OpeningHours            *string        `gorm:"column:opening_hours;type:character varying(100)" json:"opening_hours"`
+	ClosingHours            *string        `gorm:"column:closing_hours;type:character varying(100)" json:"closing_hours"`
+	IsOpen                  *bool          `gorm:"column:is_open;type:boolean" json:"is_open"`
+	IsVerified              *bool          `gorm:"column:is_verified;type:boolean" json:"is_verified"`
+	VerificationToken       *string        `gorm:"column:verification_token;type:character varying(255)" json:"verification_token"`
+	VerificationTokenExpiry *time.Time     `gorm:"column:verification_token_expiry;type:timestamp without time zone" json:"verification_token_expiry"`
+	Status                  *string        `gorm:"column:status;type:status_enum;not null;default:active" json:"status"`
+	CreatedAt               *time.Time     `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt               *time.Time     `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	DeletedAt               gorm.DeletedAt `gorm:"column:deleted_at;type:timestamp without time zone" json:"deleted_at"`
 }
 
 // TableName Grocery's table name

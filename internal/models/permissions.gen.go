@@ -14,16 +14,16 @@ const TableNamePermission = "permissions"
 
 // Permission mapped from table <permissions>
 type Permission struct {
-	ID          string         `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	Name        string         `gorm:"column:name;not null" json:"name"`
-	Description string         `gorm:"column:description" json:"description"`
-	Status      string         `gorm:"column:status;not null;default:active" json:"status"`
-	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt   time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	CreatedBy   string         `gorm:"column:created_by" json:"created_by"`
-	UpdatedBy   string         `gorm:"column:updated_by" json:"updated_by"`
-	DeletedBy   string         `gorm:"column:deleted_by" json:"deleted_by"`
+	ID          *string        `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	Name        string         `gorm:"column:name;type:character varying(50);not null" json:"name"`
+	Description *string        `gorm:"column:description;type:text" json:"description"`
+	Status      *string        `gorm:"column:status;type:status_enum;not null;default:active" json:"status"`
+	CreatedAt   *time.Time     `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt   *time.Time     `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at;type:timestamp without time zone" json:"deleted_at"`
+	CreatedBy   *string        `gorm:"column:created_by;type:uuid" json:"created_by"`
+	UpdatedBy   *string        `gorm:"column:updated_by;type:uuid" json:"updated_by"`
+	DeletedBy   *string        `gorm:"column:deleted_by;type:uuid" json:"deleted_by"`
 }
 
 // TableName Permission's table name

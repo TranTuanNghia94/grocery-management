@@ -1,9 +1,12 @@
 # Makefile for grocery-management project
 
-.PHONY: gen build
+.PHONY: gen migrate build
 
 gen:
 	go run ./tools/gen/main.go
+
+migrate:
+	go run ./tools/migration/main.go
 
 build:
 	go build -o ./bin/grocery-management ./cmd/grocery-management/main.go

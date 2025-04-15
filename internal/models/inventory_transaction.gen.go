@@ -12,22 +12,22 @@ const TableNameInventoryTransaction = "inventory_transaction"
 
 // InventoryTransaction mapped from table <inventory_transaction>
 type InventoryTransaction struct {
-	ID              string    `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	GroceryID       string    `gorm:"column:grocery_id;not null" json:"grocery_id"`
-	ProductID       string    `gorm:"column:product_id;not null" json:"product_id"`
-	Sku             string    `gorm:"column:sku;not null" json:"sku"`
-	Barcode         string    `gorm:"column:barcode;not null" json:"barcode"`
-	CategoryID      string    `gorm:"column:category_id;not null" json:"category_id"`
-	OldQuantity     int32     `gorm:"column:old_quantity;not null" json:"old_quantity"`
-	NewQuantity     int32     `gorm:"column:new_quantity;not null" json:"new_quantity"`
-	QuantityChange  int32     `gorm:"column:quantity_change;not null" json:"quantity_change"`
-	UnitPrice       float64   `gorm:"column:unit_price;not null" json:"unit_price"`
-	TransactionType string    `gorm:"column:transaction_type;not null" json:"transaction_type"`
-	TransactionDate time.Time `gorm:"column:transaction_date;default:CURRENT_TIMESTAMP" json:"transaction_date"`
-	CreatedBy       string    `gorm:"column:created_by" json:"created_by"`
-	UpdatedBy       string    `gorm:"column:updated_by" json:"updated_by"`
-	CreatedAt       time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt       time.Time `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID              *string    `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	GroceryID       string     `gorm:"column:grocery_id;type:uuid;not null" json:"grocery_id"`
+	ProductID       string     `gorm:"column:product_id;type:uuid;not null" json:"product_id"`
+	Sku             string     `gorm:"column:sku;type:character varying(80);not null" json:"sku"`
+	Barcode         string     `gorm:"column:barcode;type:character varying(100);not null" json:"barcode"`
+	CategoryID      string     `gorm:"column:category_id;type:uuid;not null" json:"category_id"`
+	OldQuantity     int32      `gorm:"column:old_quantity;type:integer;not null" json:"old_quantity"`
+	NewQuantity     int32      `gorm:"column:new_quantity;type:integer;not null" json:"new_quantity"`
+	QuantityChange  int32      `gorm:"column:quantity_change;type:integer;not null" json:"quantity_change"`
+	UnitPrice       float64    `gorm:"column:unit_price;type:numeric(15,0);not null" json:"unit_price"`
+	TransactionType string     `gorm:"column:transaction_type;type:inventory_transaction_type;not null" json:"transaction_type"`
+	TransactionDate *time.Time `gorm:"column:transaction_date;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"transaction_date"`
+	CreatedBy       *string    `gorm:"column:created_by;type:uuid" json:"created_by"`
+	UpdatedBy       *string    `gorm:"column:updated_by;type:uuid" json:"updated_by"`
+	CreatedAt       *time.Time `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt       *time.Time `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 // TableName InventoryTransaction's table name

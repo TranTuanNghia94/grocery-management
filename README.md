@@ -1,65 +1,103 @@
-# Grocery Management System
+# Go API Project
 
-This project is a simple Grocery Management System built with Go and PostgreSQL. It allows users to manage grocery items and user accounts through a RESTful API.
+A RESTful API built with Go 1.23.5, Gin, GORM, GORM Gen, golang-migrate, and PostgreSQL, using clean architecture with interfaces.
 
-## Project Structure
+## Features
+
+- User registration and authentication with JWT
+- RESTful API design
+- Database migrations
+- Environment-based configuration
+- Clean architecture with interfaces
+- Dependency injection
+- Type-safe queries with GORM Gen
+- Docker and Docker Compose support
+
+## Clean Architecture
+
+This project follows clean architecture principles with well-defined interfaces between layers:
+
+### Layers
+1. **Models**: Data structures and DTOs
+2. **Repositories**: Database operations defined by interfaces
+3. **Services**: Business logic defined by interfaces
+4. **Controllers**: HTTP request handlers defined by interfaces
+5. **Routes**: API endpoint definitions
+
+### Benefits of Interface-Based Approach
+- **Testability**: Easy to mock dependencies for unit testing
+- **Loose Coupling**: Components depend on abstractions, not concrete implementations
+- **Flexibility**: Implementations can be swapped without changing the dependent code
+- **Clear Boundaries**: Well-defined responsibilities for each layer
+
+## Getting Started
+
+### Local Development
+
+1. Clone the repository
+```
+git clone https://github.com/yourusername/myapp.git
+cd myapp
+```
+
+2. Copy the example environment file and update with your values
+```
+cp .env.example .env
+```
+
+3. Install dependencies
+```
+go mod tidy
+```
+
+4. Create the PostgreSQL database
+```
+createdb myapp
+```
+
+5. Run migrations
+```
+make migrate-up
+```
+
+6. Generate type-safe query code
+```
+make generate
+```
+
+7. Run the application
+```
+make run
+```
+
+## Testing
+
+The project uses interfaces to facilitate testing with mocks:
 
 ```
-grocery-management
-├── cmd
-│   └── server
-│       └── main.go          # Entry point of the application
-├── internal
-│   ├── api
-│   │   ├── handlers.go      # HTTP handler functions
-│   │   └── routes.go        # API routes setup
-│   ├── models
-│   │   ├── grocery.go       # Grocery item model
-│   │   └── user.go          # User model
-│   ├── db
-│   │   └── postgres.go      # Database connection and interactions
-│   └── config
-│       └── config.go        # Application configuration management
-├── migrations
-│   ├── 001_create_users_table.sql  # Migration for users table
-│   └── 002_create_groceries_table.sql  # Migration for groceries table
-├── scripts
-│   └── seed.go              # Database seeding script
-├── go.mod                   # Go module definition
-├── go.sum                   # Dependency checksums
-├── docker-compose.yml       # Docker configuration
-├── .env.example             # Example environment variables
-└── README.md                # Project documentation
+go test ./...
 ```
 
-## Setup Instructions
+Example test using mocks:
+```go
+// Setup mock repository
+mockRepo := mocks.NewMockUserRepository()
+userService := services.NewUserService(mockRepo, config)
 
-1. **Clone the repository:**
-   ```
-   git clone <repository-url>
-   cd grocery-management
-   ```
+// Test service with mock repository
+user, err := userService.CreateUser(input)
+```
 
-2. **Install dependencies:**
-   ```
-   go mod tidy
-   ```
+## API Endpoints
 
-3. **Set up the database:**
-   - Create a PostgreSQL database and update the connection details in the `.env` file.
+### Public Endpoints
 
-4. **Run migrations:**
-   - Use the migration scripts in the `migrations` folder to set up the database schema.
+- `POST /api/register` - Register a new user
+- `POST /api/login` - Login and get JWT token
 
-5. **Start the application:**
-   ```
-   go run cmd/server/main.go
-   ```
+### Protected Endpoints (Requires Authentication)
 
-## Usage
-
-- The API provides endpoints for managing groceries and users. Refer to the `internal/api/routes.go` file for a list of available endpoints and their usage.
-
-## License
-
-This project is licensed under the MIT License.
+- `GET /api/users` - List all users
+- `GET /api/users/:id` - Get a user by ID
+- `PUT /api/users/:id` - Update a user
+- `DELETE /api/users/:id` - Delete a user

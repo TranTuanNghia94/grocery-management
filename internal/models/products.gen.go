@@ -12,23 +12,23 @@ const TableNameProduct = "products"
 
 // Product mapped from table <products>
 type Product struct {
-	ID          string    `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	Name        string    `gorm:"column:name;not null" json:"name"`
-	Description string    `gorm:"column:description" json:"description"`
-	Sku         string    `gorm:"column:sku" json:"sku"`
-	Barcode     string    `gorm:"column:barcode" json:"barcode"`
-	CategoryID  string    `gorm:"column:category_id" json:"category_id"`
-	Price       float64   `gorm:"column:price;not null" json:"price"`
-	CostPrice   float64   `gorm:"column:cost_price" json:"cost_price"`
-	TaxRate     float64   `gorm:"column:tax_rate" json:"tax_rate"`
-	Weight      float64   `gorm:"column:weight" json:"weight"`
-	WeightUnit  string    `gorm:"column:weight_unit" json:"weight_unit"`
-	IsActive    bool      `gorm:"column:is_active;default:true" json:"is_active"`
-	CreatedBy   string    `gorm:"column:created_by" json:"created_by"`
-	UpdatedBy   string    `gorm:"column:updated_by" json:"updated_by"`
-	Status      string    `gorm:"column:status;not null;default:active" json:"status"`
-	CreatedAt   time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt   time.Time `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID          *string    `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	Name        string     `gorm:"column:name;type:character varying(255);not null" json:"name"`
+	Description *string    `gorm:"column:description;type:text" json:"description"`
+	Sku         *string    `gorm:"column:sku;type:character varying(80)" json:"sku"`
+	Barcode     *string    `gorm:"column:barcode;type:character varying(100)" json:"barcode"`
+	CategoryID  *string    `gorm:"column:category_id;type:uuid" json:"category_id"`
+	Price       float64    `gorm:"column:price;type:numeric(15,0);not null" json:"price"`
+	CostPrice   *float64   `gorm:"column:cost_price;type:numeric(15,0)" json:"cost_price"`
+	TaxRate     *float64   `gorm:"column:tax_rate;type:numeric(5,2)" json:"tax_rate"`
+	Weight      *float64   `gorm:"column:weight;type:numeric(8,2)" json:"weight"`
+	WeightUnit  *string    `gorm:"column:weight_unit;type:character varying(10)" json:"weight_unit"`
+	IsActive    *bool      `gorm:"column:is_active;type:boolean;default:true" json:"is_active"`
+	CreatedBy   *string    `gorm:"column:created_by;type:uuid" json:"created_by"`
+	UpdatedBy   *string    `gorm:"column:updated_by;type:uuid" json:"updated_by"`
+	Status      *string    `gorm:"column:status;type:status_enum;not null;default:active" json:"status"`
+	CreatedAt   *time.Time `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt   *time.Time `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 // TableName Product's table name

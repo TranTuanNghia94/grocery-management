@@ -12,14 +12,14 @@ const TableNameCategory = "categories"
 
 // Category mapped from table <categories>
 type Category struct {
-	ID          string    `gorm:"column:id;primaryKey;default:uuid_generate_v4()" json:"id"`
-	Name        string    `gorm:"column:name;not null" json:"name"`
-	Description string    `gorm:"column:description" json:"description"`
-	ParentID    string    `gorm:"column:parent_id" json:"parent_id"`
-	IsActive    bool      `gorm:"column:is_active;default:true" json:"is_active"`
-	CreatedBy   string    `gorm:"column:created_by" json:"created_by"`
-	CreatedAt   time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt   time.Time `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID          *string    `gorm:"column:id;type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	Name        string     `gorm:"column:name;type:character varying(100);not null" json:"name"`
+	Description *string    `gorm:"column:description;type:text" json:"description"`
+	ParentID    *string    `gorm:"column:parent_id;type:uuid" json:"parent_id"`
+	IsActive    *bool      `gorm:"column:is_active;type:boolean;default:true" json:"is_active"`
+	CreatedBy   *string    `gorm:"column:created_by;type:uuid" json:"created_by"`
+	CreatedAt   *time.Time `gorm:"column:created_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt   *time.Time `gorm:"column:updated_at;type:timestamp without time zone;default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 // TableName Category's table name
