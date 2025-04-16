@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 	"grocery-management/internal/config"
 	"time"
@@ -36,13 +37,13 @@ func NewPostgresDB(cfg config.Config) (*PostgresDB, error) {
 	// Create connection
 	db, err := gorm.Open(postgres.Open(dsn), gormConfig)
 	if err != nil {
-		return nil, fmt.Errorf("unable to connect to database: %w", err)
+		return nil, errors.New("unable to connect to database: " + err.Error())
 	}
 
 	// Configure connection pool settings
 	sqlDB, err := db.DB()
 	if err != nil {
-		return nil, fmt.Errorf("unable to get underlying database: %w", err)
+		return nil, errors.New("unable to get underlying database: " + err.Error())
 	}
 
 	// Set connection pool settings

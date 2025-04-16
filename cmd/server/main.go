@@ -1,8 +1,10 @@
 package main
 
 import (
+	"grocery-management/internal/api"
 	"grocery-management/internal/config"
 	"grocery-management/internal/db"
+	"grocery-management/internal/di"
 	"log"
 
 	"go.uber.org/zap"
@@ -25,6 +27,16 @@ func main() {
 	}
 
 	defer db.Instance.Close()
-	// Load configuration
 
+	// Setup dependency injection
+	container := di.NewContainer(db.Instance.GetDB(), cfg)
+
+	// Setup routes
+	r := api.SetupRouter(container)
+
+	// Start server
+	logger.Info("Starting server", zap.String("port", cfg.AppPort))
+	if err := r.Run(":" + cfg.AppPort); err != nil {
+		logger.Fatal("failed to start server", zap.Error(err))
+	}
 }

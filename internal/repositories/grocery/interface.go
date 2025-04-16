@@ -18,7 +18,7 @@ type GroceryRepository struct {
 	q  *query.Query // The generated query interface
 }
 
-func NewUserRepository(db *gorm.DB) IGroceryRepository {
+func NewGroceryRepo(db *gorm.DB) IGroceryRepository {
 	return &GroceryRepository{
 		DB: db,
 		q:  query.Use(db),
