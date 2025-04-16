@@ -11,6 +11,7 @@ var _ IGroceryRepository = (*GroceryRepository)(nil)
 
 type IGroceryRepository interface {
 	Create(grocery *models.Grocery) (*models.Grocery, error)
+	GetAll() ([]models.Grocery, error)
 }
 
 type GroceryRepository struct {

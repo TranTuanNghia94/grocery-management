@@ -1,0 +1,1 @@
+ALTER TABLE role_permissions ADD COLUMN description VARCHAR(255) DEFAULT NULL;

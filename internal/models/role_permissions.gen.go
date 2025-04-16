@@ -24,6 +24,7 @@ type RolePermission struct {
 	CreatedBy    *string        `gorm:"column:created_by;type:uuid" json:"created_by"`
 	UpdatedBy    *string        `gorm:"column:updated_by;type:uuid" json:"updated_by"`
 	DeletedBy    *string        `gorm:"column:deleted_by;type:uuid" json:"deleted_by"`
+	Description  *string        `gorm:"column:description;type:character varying(255);default:NULL" json:"description"`
 }
 
 // TableName RolePermission's table name

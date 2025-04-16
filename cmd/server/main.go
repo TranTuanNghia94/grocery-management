@@ -5,24 +5,25 @@ import (
 	"grocery-management/internal/config"
 	"grocery-management/internal/db"
 	"grocery-management/internal/di"
-	"log"
+	"grocery-management/pkg/logger"
 
 	"go.uber.org/zap"
 )
 
 func main() {
-
 	// Initialize logger
-	logger, _ := zap.NewProduction()
+	logger.InitWithRotation(".logs/app.log", "info")
 	defer logger.Sync()
 
+	logger.Info("Starting Grocery Management")
+
 	// Initialize DB
-	cfg, err := config.LoadConfig(logger)
+	cfg, err := config.LoadConfig(logger.Log)
 	if err != nil {
-		log.Fatalf("could not load config: %v", err)
+		logger.Fatal("could not load config: %v", zap.Error(err))
 	}
 
-	if err := db.Initialize(*cfg, logger); err != nil {
+	if err := db.Initialize(*cfg, logger.Log); err != nil {
 		logger.Fatal("failed to initialize database", zap.Error(err))
 	}
 

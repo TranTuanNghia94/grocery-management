@@ -2,12 +2,15 @@ package api
 
 import (
 	"grocery-management/internal/di"
+	"grocery-management/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter(container *di.Container) *gin.Engine {
 	r := gin.Default()
+
+	r.Use(middleware.LoggerMiddleware())
 
 	// Public routes
 	r.GET("/api/ping", func(c *gin.Context) {
@@ -16,6 +19,9 @@ func SetupRouter(container *di.Container) *gin.Engine {
 			"status":  200,
 		})
 	})
+
+	r.POST("/api/groceries", container.GroceryCtrl.GetAllGrocery)
+
 	// r.POST("/api/login", container.UserController.Login)
 
 	// Protected routes

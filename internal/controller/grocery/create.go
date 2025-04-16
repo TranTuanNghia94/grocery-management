@@ -11,7 +11,9 @@ func (c *GroceryController) CreateGrocery(ctx *gin.Context) {
 	var input models.Grocery
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		// ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		// return
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
 	}
 

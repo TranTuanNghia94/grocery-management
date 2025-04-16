@@ -11,6 +11,7 @@ var _ IGroceryService = (*GroceryService)(nil)
 
 type IGroceryService interface {
 	CreateGrocery(input models.Grocery) (*models.Grocery, error)
+	GetAllGroceries() ([]models.Grocery, error)
 }
 
 type GroceryService struct {

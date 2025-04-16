@@ -8,6 +8,7 @@ import (
 
 type IGroceryController interface {
 	CreateGrocery(ctx *gin.Context)
+	GetAllGrocery(ctx *gin.Context)
 }
 
 // Ensure UserController implements IUserController
