@@ -10,7 +10,7 @@ import (
 func SetupRouter(container *di.Container) *gin.Engine {
 	r := gin.Default()
 
-	r.Use(middleware.LoggerMiddleware())
+	r.Use(middleware.LoggerMiddleware([]string{}))
 
 	// Public routes
 	r.GET("/api/ping", func(c *gin.Context) {
@@ -19,8 +19,8 @@ func SetupRouter(container *di.Container) *gin.Engine {
 			"status":  200,
 		})
 	})
-
-	r.POST("/api/groceries", container.GroceryCtrl.GetAllGrocery)
+	g := r.Group("/api/v1")
+	g.POST("/groceries", container.GroceryCtrl.GetAllGrocery)
 
 	// r.POST("/api/login", container.UserController.Login)
 

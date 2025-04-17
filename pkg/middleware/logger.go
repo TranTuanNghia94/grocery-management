@@ -1,38 +1,86 @@
 package middleware
 
 import (
+	"bytes"
 	"grocery-management/pkg/logger"
+	"io"
 	"time"
+
+	"slices"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-func LoggerMiddleware() gin.HandlerFunc {
+func LoggerMiddleware(skipPaths []string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		start := time.Now()
+		// Skip logging for certain paths (like health checks)
 		path := c.Request.URL.Path
-		query := c.Request.URL.RawQuery
+		if slices.Contains(skipPaths, path) {
+			c.Next()
+			return
+		}
+
+		// Start timer
+		start := time.Now()
+
+		// Create a custom response writer
+		w := &responseBodyLogWriter{
+			ResponseWriter: c.Writer,
+			body:           bytes.NewBufferString(""),
+		}
+		c.Writer = w
+
+		// Log request body if it exists
+		var requestBody string
+		if c.Request.Body != nil {
+			bodyBytes, _ := c.GetRawData()
+			requestBody = string(bodyBytes)
+			// Re-create the body for the actual handler to read
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+		}
 
 		// Process request
 		c.Next()
 
-		// Post-processing
+		// Calculate latency
 		latency := time.Since(start)
-		clientIP := c.ClientIP()
-		method := c.Request.Method
-		statusCode := c.Writer.Status()
-		errorMessage := c.Errors.ByType(gin.ErrorTypePrivate).String()
 
-		// Log the request details
-		logger.Log.Info("HTTP Request",
-			zap.Int("status", statusCode),
-			zap.String("method", method),
+		// Log basic request information
+		fields := []zap.Field{
+			zap.Int("status", c.Writer.Status()),
+			zap.String("method", c.Request.Method),
 			zap.String("path", path),
-			zap.String("query", query),
-			zap.String("ip", clientIP),
+			zap.String("query", c.Request.URL.RawQuery),
+			zap.String("ip", c.ClientIP()),
 			zap.Duration("latency", latency),
-			zap.String("error", errorMessage),
-		)
+			zap.Int("size", c.Writer.Size()),
+		}
+
+		// Add request body if not empty and not too large
+		if len(requestBody) > 0 && len(requestBody) < 1024 {
+			fields = append(fields, zap.String("request", requestBody))
+		}
+
+		// Add response body if not too large
+		responseBody := w.body.String()
+		if len(responseBody) > 0 && len(responseBody) < 1024 {
+			fields = append(fields, zap.String("response", responseBody))
+		}
+
+		// Add any errors from the context
+		if len(c.Errors) > 0 {
+			fields = append(fields, zap.String("errors", c.Errors.String()))
+		}
+
+		// Log at appropriate level based on status code
+		msg := "HTTP Request"
+		if c.Writer.Status() >= 500 {
+			logger.Log.Error(msg, fields...)
+		} else if c.Writer.Status() >= 400 {
+			logger.Log.Warn(msg, fields...)
+		} else {
+			logger.Log.Info(msg, fields...)
+		}
 	}
 }

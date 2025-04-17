@@ -1,0 +1,24 @@
+PaginationRequest:
+  type: object
+  properties:
+    page:
+      type: integer
+      description: The page number for pagination.
+      example: 1
+      minimum: 0
+    limit:
+      type: integer
+      description: The number of items per page.
+      example: 10
+    sort:
+      type: string
+      description: The field to sort by.
+      example: name
+    order:
+      type: string
+      enum: [asc, desc]
+      description: The order of sorting (asc or desc).
+      example: asc
+  required:
+    - page
+    - limit

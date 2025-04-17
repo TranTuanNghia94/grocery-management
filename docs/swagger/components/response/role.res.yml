@@ -1,0 +1,27 @@
+GeneralResponse:
+  description: General response object
+  type: object
+  properties:
+    code:
+      type: integer
+      description: Response code
+    message:
+      type: string
+      description: Response message
+    data:
+      $ref: '../common/role.yml#/BaseRole'
+        
+GeneralArrayResponse:
+  description: General response object
+  type: object
+  properties:
+    code:
+      type: integer
+      description: Response code
+    message:
+      type: string
+      description: Response message
+    data:
+      type: array
+      items:
+        $ref: '../common/role.yml#/BaseRole'

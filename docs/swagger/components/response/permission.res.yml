@@ -1,0 +1,42 @@
+PermissionResponse:
+  description: Permission response
+  type: object
+  properties:
+    id:
+      type: string
+      example: 123e4567-e89b-12d3-a456-426614174000
+    name:
+      type: string
+      example: read:users
+    description:
+      type: string
+      example: Permission to read user data
+    status:
+      type: string
+      enum: [active, inactive, pending, canceled, deleted]
+      example: active
+    createdAt:
+      type: string
+      example: '2023-10-01T12:00:00Z'
+    updatedAt:
+      type: string
+      example: '2023-10-01T12:00:00Z'
+    deletedAt:
+      type: string
+      example: '2023-10-01T12:00:00Z'
+    createdBy:
+      type: string
+      example: 'system'
+    updatedBy:
+      type: string
+      example: 'system'
+    deletedBy:
+      type: string
+      example: 'system'
+  required:
+    - id
+    - name
+    - description
+    - status
+    - createdAt
+    - updatedAt

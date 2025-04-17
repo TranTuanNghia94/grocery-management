@@ -1,0 +1,147 @@
+PathCreate:
+  post:
+    tags:
+        - Role
+    summary: Create a new role
+    operationId: createRole
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/request/role.req.yml#/RoleRequest'
+    responses:
+      '201':
+        description: Role created successfully.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/response/role.res.yml#/GeneralResponse'
+      '400':
+        description: Bad request. Invalid input data.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+      '500':
+        description: Internal server error. Unable to create role.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+
+PathUpdate:
+  put:
+    tags:
+      - Role
+    summary: Update an existing role
+    operationId: updateRole
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/request/role.req.yml#/RoleUpdateRequest'
+    responses:
+      '200':
+        description: Role updated successfully.
+        content:
+          application/json:
+            schema:
+               $ref: '../components/response/role.res.yml#/GeneralResponse'
+      '400':
+        description: Bad request. Invalid input data.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+      '404':
+        description: Role not found. Unable to update role.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+      '500':
+        description: Internal server error. Unable to update role.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+
+PathDelete:
+  delete:
+    tags:
+      - Role
+    summary: Delete a role
+    operationId: deleteRole
+    parameters:
+      - name: id
+        in: query
+        required: true
+        description: The unique identifier of the role to be deleted.
+        schema:
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+    responses:
+      '200':
+        description: Role deleted successfully.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/response/role.res.yml#/GeneralResponse'
+      '400':
+        description: Bad request. Invalid input data.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+      '404':
+        description: Role not found. Unable to delete role.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+      '500':
+        description: Internal server error. Unable to delete role.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+
+PathGet:
+  post:
+    tags:
+      - Role
+    summary: Get all roles
+    operationId: getAllRoles
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/common/pagination.req.yml#/PaginationRequest'
+    responses:
+      '200':
+        description: Role retrieved successfully.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/response/role.res.yml#/GeneralArrayResponse'
+      '400':
+        description: Bad request. Invalid input data.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+      '404':
+        description: Role not found. Unable to retrieve role.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'
+      '500':
+        description: Internal server error. Unable to retrieve role.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/common/error.res.yml#/ErrorResponse'

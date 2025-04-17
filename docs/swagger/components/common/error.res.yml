@@ -1,0 +1,24 @@
+ErrorResponse:
+  type: object
+  properties:
+    code:
+      type: integer
+      format: int32
+      example: 400
+    message:
+      type: string
+      example: Invalid request
+    details:
+      type: string
+      example: The role ID is required
+    errors:
+      type: array
+      items:
+        type: string
+      example:
+        - The role ID is required
+        - The role name must be at least 3 characters long
+  required:
+    - code
+    - message
+    - details

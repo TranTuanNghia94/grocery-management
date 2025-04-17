@@ -1,0 +1,38 @@
+BaseRole:
+  description: Base role object with common properties
+  type: object
+  properties:
+    name:
+      type: string
+      example: admin
+    description:
+      type: string
+      example: Administrator role with full access
+    status:
+      type: string
+      enum: [active, inactive, pending, canceled, deleted]
+      example: active
+    createdAt:
+      type: string
+      format: date-time
+      example: '2023-10-01T12:00:00Z'
+    updatedAt:
+      type: string
+      format: date-time
+      example: '2023-10-01T12:00:00Z'
+    createdBy:
+      type: string
+      example: 'admin'
+    updatedBy:
+      type: string
+      example: 'admin'
+    deletedAt:
+      type: string
+      format: date-time
+      example: '2023-10-01T12:00:00Z'
+    deletedBy:
+      type: string
+      example: 'admin'
+  required:
+    - name
+    - description
