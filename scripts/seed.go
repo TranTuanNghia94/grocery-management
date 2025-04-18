@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"grocery-management/internal/models"
+	"grocery-management/pkg/security"
 	"log"
 	"strings"
 
@@ -20,10 +21,15 @@ func main() {
 	seedPermissions(db)
 	seedRolePermissions(db)
 	seedGrocery(db)
+	seedUser(db)
 }
 
 func getStringVlue(s string) *string {
 	return &s
+}
+
+func getBoolValue(b bool) *bool {
+	return &b
 }
 
 var mapRoleToID = map[string]string{}
@@ -198,6 +204,7 @@ func seedGrocery(db *sql.DB) {
 	log.Println("Starting to seed grocery...")
 
 	grocery := models.Grocery{
+		ID:           getStringVlue("188ee790-4ae0-43d4-9714-a5cd29941e75"),
 		Name:         "Grocery Store Local",
 		Description:  getStringVlue("A local grocery store"),
 		Status:       getStringVlue("active"),
@@ -218,4 +225,36 @@ func seedGrocery(db *sql.DB) {
 	}
 
 	log.Println("Seeding grocery completed.")
+}
+
+func seedUser(db *sql.DB) {
+	log.Println("Starting to seed superman...")
+
+	pwd, err := security.HashPasswordWithCost("superman", 10)
+	if err != nil {
+		log.Fatal("Error hashing password:", err)
+	}
+
+	user := models.User{
+		GroceryID:    "188ee790-4ae0-43d4-9714-a5cd29941e75",
+		Username:     "superman",
+		Email:        "trantuannghia94@gmail.com",
+		PasswordHash: pwd,
+		FirstName:    getStringVlue("Nghia"),
+		LastName:     getStringVlue("Tran Tuan"),
+		IsActive:     getBoolValue(true),
+		PhoneNumber:  getStringVlue("123456789"),
+		RoleID:       getStringVlue(mapRoleToID["admin"]),
+		Status:       getStringVlue("active"),
+	}
+
+	_, err = db.Exec("INSERT INTO users (grocery_id, username, email, password_hash, first_name, last_name, is_active, phone_number, role_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+		user.GroceryID, user.Username, user.Email, user.PasswordHash, user.FirstName, user.LastName, user.IsActive, user.PhoneNumber, user.RoleID, user.Status)
+	if err != nil {
+		log.Printf("Error seeding user %s: %v", user.Username, err)
+	} else {
+		log.Printf("User added: %s", user.Username)
+	}
+
+	log.Println("Seeding user completed.")
 }

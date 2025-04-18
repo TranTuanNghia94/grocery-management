@@ -3,8 +3,10 @@ package di
 import (
 	"grocery-management/internal/config"
 	controller "grocery-management/internal/controller/grocery"
-	repo "grocery-management/internal/repositories/grocery"
-	services "grocery-management/internal/service/grocery"
+	groceryCtrl "grocery-management/internal/controller/grocery"
+	groceryRepo "grocery-management/internal/repositories/grocery"
+	userRepo "grocery-management/internal/repositories/user"
+	grocerySvc "grocery-management/internal/service/grocery"
 
 	"gorm.io/gorm"
 )
@@ -12,9 +14,13 @@ import (
 type Container struct {
 	DB          *gorm.DB
 	Config      *config.Config
-	GroceryRepo repo.IGroceryRepository
-	GrocerySvc  services.IGroceryService
-	GroceryCtrl controller.IGroceryController
+	GroceryRepo groceryRepo.IGroceryRepository
+	GrocerySvc  grocerySvc.IGroceryService
+	GroceryCtrl groceryCtrl.IGroceryController
+
+	UserRepo userRepo.IUserRepository
+	UserSvc  services.IUserService
+	UserCtrl controller.IUserController
 }
 
 // NewContainer creates a new dependency injection container

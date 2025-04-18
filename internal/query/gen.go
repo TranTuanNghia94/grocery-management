@@ -86,6 +86,11 @@ type Query struct {
 	Vendor               vendor
 }
 
+// Error implements error.
+func (q *Query) Error() string {
+	panic("unimplemented")
+}
+
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {

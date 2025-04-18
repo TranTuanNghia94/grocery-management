@@ -1,0 +1,8 @@
+package: api
+generate:
+  - server
+include-tags:
+  - Role
+output: ../../internal/api/api.gen.go
+import-mapping:
+  ./openapi.yaml: grocery-management/internal/dto

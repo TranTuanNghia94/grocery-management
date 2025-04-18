@@ -1,0 +1,5 @@
+package: dto
+generate:
+  - types
+  - skip-prune
+output: ../../internal/dto/dto.gen.go

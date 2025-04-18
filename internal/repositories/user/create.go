@@ -1,18 +1,14 @@
 package repositories
 
 import (
+	"errors"
 	"grocery-management/internal/models"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 func (r *UserRepository) Create(user *models.User) (*models.User, error) {
-	// Hash password before saving
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash), bcrypt.DefaultCost)
-	if err != nil {
-		return nil, err
+	if user == nil {
+		return nil, errors.New("user cannot be nil")
 	}
-	user.PasswordHash = string(hashedPassword)
 
 	// Using generated code for create operation
 	if err := r.q.User.Create(user); err != nil {

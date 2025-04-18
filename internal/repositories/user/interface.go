@@ -11,6 +11,7 @@ var _ IUserRepository = (*UserRepository)(nil)
 
 type IUserRepository interface {
 	Create(user *models.User) (*models.User, error)
+	GetByUsername(username string) (*models.User, error)
 	// GetByID(id string) (*models.User, error)
 	// GetByEmail(email string) (*models.User, error)
 	// Update(user *models.User) (*models.User, error)
