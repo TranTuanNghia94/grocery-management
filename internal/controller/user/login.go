@@ -18,7 +18,7 @@ func (c *UserController) Login(ctx *gin.Context) {
 		return
 	}
 
-	jwt, err := c.service.Login(input.Username, input.Password)
+	jwt, err := c.service.Login(ctx, input.Username, input.Password)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, wrapper.ServerErrorResponse(err, "Login failed"))
 		return

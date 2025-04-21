@@ -3,9 +3,11 @@ package repositories
 import (
 	"errors"
 	"grocery-management/internal/models"
+
+	"github.com/gin-gonic/gin"
 )
 
-func (r *UserRepository) Create(user *models.User) (*models.User, error) {
+func (r *UserRepository) Create(ctx *gin.Context, user *models.User) (*models.User, error) {
 	if user == nil {
 		return nil, errors.New("user cannot be nil")
 	}

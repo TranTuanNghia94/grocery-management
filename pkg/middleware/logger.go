@@ -2,8 +2,10 @@ package middleware
 
 import (
 	"bytes"
+	"encoding/json"
 	"grocery-management/pkg/logger"
 	"io"
+	"strings"
 	"time"
 
 	"slices"
@@ -40,6 +42,20 @@ func LoggerMiddleware(skipPaths []string) gin.HandlerFunc {
 			c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 		}
 
+		if strings.Contains(requestBody, "password") {
+			// Mask the "password" field in the JSON request body
+			if strings.Contains(c.Request.Header.Get("Content-Type"), "application/json") {
+				var jsonBody map[string]interface{}
+				if err := json.Unmarshal([]byte(requestBody), &jsonBody); err == nil {
+					if _, exists := jsonBody["password"]; exists {
+						jsonBody["password"] = "******"
+					}
+					maskedBody, _ := json.Marshal(jsonBody)
+					requestBody = string(maskedBody)
+				}
+			}
+		}
+
 		// Process request
 		c.Next()
 
@@ -65,7 +81,11 @@ func LoggerMiddleware(skipPaths []string) gin.HandlerFunc {
 		// Add response body if not too large
 		responseBody := w.body.String()
 		if len(responseBody) > 0 && len(responseBody) < 1024 {
-			fields = append(fields, zap.String("response", responseBody))
+			if strings.Contains(responseBody, "jwt") {
+				fields = append(fields, zap.String("response", "*****"))
+			} else {
+				fields = append(fields, zap.String("response", responseBody))
+			}
 		}
 
 		// Add any errors from the context

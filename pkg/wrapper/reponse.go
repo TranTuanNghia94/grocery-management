@@ -6,11 +6,11 @@ import (
 
 // Response is a generic API response structure
 type Response struct {
-	Success    bool        `json:"success"`
-	StatusCode int         `json:"status_code"`
-	Message    string      `json:"message"`
-	Data       interface{} `json:"data,omitempty"`
-	Error      interface{} `json:"error,omitempty"`
+	Success    bool          `json:"success"`
+	StatusCode int           `json:"status_code"`
+	Message    string        `json:"message"`
+	Data       interface{}   `json:"data,omitempty"`
+	Error      *ErrorWrapper `json:"error,omitempty"`
 }
 
 // NewResponse creates a new response with default values
@@ -33,13 +33,15 @@ func SuccessResponse(data interface{}, message string) *Response {
 }
 
 // ErrorResponse returns an error response
-func ErrorResponse(err interface{}, message string, statusCode int) *Response {
-	return &Response{
+func ErrorResponse(err any, message string, statusCode int) *Response {
+	response := &Response{
 		Success:    false,
 		StatusCode: statusCode,
 		Message:    message,
 		Error:      err,
+		Data:       nil,
 	}
+	return response
 }
 
 // NotFoundResponse returns a not found error response

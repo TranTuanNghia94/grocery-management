@@ -6,6 +6,7 @@ import (
 	"grocery-management/internal/db"
 	"grocery-management/internal/di"
 	"grocery-management/pkg/logger"
+	"grocery-management/pkg/security"
 
 	"go.uber.org/zap"
 )
@@ -34,6 +35,8 @@ func main() {
 
 	// Setup routes
 	r := api.SetupRouter(container)
+
+	security.Init(logger.Log)
 
 	// Start server
 	logger.Info("Starting server", zap.String("port", cfg.AppPort))

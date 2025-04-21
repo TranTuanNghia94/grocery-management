@@ -3,21 +3,33 @@ package security
 import (
 	"errors"
 	"grocery-management/internal/models"
+	"grocery-management/pkg/logger"
 	"os"
 
 	"github.com/golang-jwt/jwt/v5"
+	"go.uber.org/zap"
 )
 
-var secret = os.Getenv("JWT_SECRET") // secret is the JWT secret key used for signing tokens
-var exp = os.Getenv("JWT_EXP")       // exp is the expiration time for the JWT token
+var secret string // secret is the JWT secret key used for signing tokens
+var exp string    // exp is the expiration time for the JWT token
+
+func Init(log *zap.Logger) {
+	secret = os.Getenv("JWT_SECRET")
+	exp = os.Getenv("JWT_EXP")
+
+	log.Info("JWT_SECRET", zap.String("secret", secret))
+	log.Info("JWT_EXP", zap.String("exp", exp))
+}
 
 func GenerateJWT(user *models.User) (string, error) {
 	if user == nil {
+		logger.Log.Error("user cannot be nil")
 		return "", errors.New("user cannot be nil")
 	}
 
 	// Create a new JWT token
 	if secret == "" || exp == "" {
+		logger.Log.Error("JWT_SECRET and JWT_EXP environment variables must be set")
 		return "", errors.New("JWT_SECRET and JWT_EXP environment variables must be set")
 	}
 
@@ -36,6 +48,7 @@ func GenerateJWT(user *models.User) (string, error) {
 	tokenString, err := token.SignedString([]byte(secret))
 
 	if err != nil {
+		logger.Log.Error("failed to sign token", zap.String("error", err.Error()))
 		return "", err
 	}
 	return tokenString, nil

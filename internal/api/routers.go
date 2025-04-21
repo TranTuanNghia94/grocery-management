@@ -21,6 +21,7 @@ func SetupRouter(container *di.Container) *gin.Engine {
 	})
 	g := r.Group("/api/v1")
 	g.POST("/groceries", container.GroceryCtrl.GetAllGrocery)
+	g.POST("/login", container.UserCtrl.Login)
 
 	// r.POST("/api/login", container.UserController.Login)
 
